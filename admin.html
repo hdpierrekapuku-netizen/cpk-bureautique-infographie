@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration | CPK Shop</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+    }
+
+    .admin-container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-box {
+      background: #151515;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background: #0b0b0b;
+      color: white;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #d4af37;
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #d4af37;
+      text-decoration: none;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="admin-container">
+
+    <h1>Administration — CPK Shop</h1>
+
+    <div class="form-box">
+
+      <form id="productForm">
+
+        <label for="name">Nom du produit</label>
+        <input type="text" id="name" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" required></textarea>
+
+        <label for="price">Prix</label>
+        <input type="text" id="price" placeholder="Exemple : 10 $" required>
+
+        <label for="image">Lien de l'image</label>
+        <input type="url" id="image" placeholder="https://..." required>
+
+        <button type="submit">Ajouter le produit</button>
+
+      </form>
+
+      <p id="message"></p>
+
+    </div>
+
+    <a class="back" href="index.html">← Retour à la boutique</a>
+
+  </div>
+
+  <script>
+    const form = document.getElementById("productForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const product = {
+        name: document.getElementById("name").value,
+        description: document.getElementById("description").value,
+        price: document.getElementById("price").value,
+        image: document.getElementById("image").value
+      };
+
+      const products =
+        JSON.parse(localStorage.getItem("cpkProducts")) || [];
+
+      products.push(product);
+
+      localStorage.setItem(
+        "cpkProducts",
+        JSON.stringify(products)
+      );
+
+      form.reset();
+
+      message.textContent = "Produit ajouté avec succès !";
+    });
+  </script>
+
+</body>
+        </html>
